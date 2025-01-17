@@ -169,3 +169,8 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+.ipynb_checkpoints/
+nyc_tlc_trip_record_data/
+*.csv
+*.gz

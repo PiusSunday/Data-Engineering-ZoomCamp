@@ -1,0 +1,4 @@
+.ipynb_checkpoints/
+nyc_tlc_trip_record_data/
+*.csv
+*.gz

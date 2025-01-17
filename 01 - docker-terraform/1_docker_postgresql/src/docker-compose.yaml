@@ -1,0 +1,137 @@
+#services:
+#  pgdatabase:
+#    image: postgres:latest
+#    environment:
+#      - POSTGRES_USER=root
+#      - POSTGRES_PASSWORD=root
+#      - POSTGRES_DB=nyc_tlc_trd
+#    volumes:
+#      - "./nyc_tlc_trip_record_data:/var/lib/postgresql/data:rw"
+#    ports:
+#      - "5432:5432"
+#  pgadmin:
+#    image: dpage/pgadmin4
+#    environment:
+#      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+#      - PGADMIN_DEFAULT_PASSWORD=root
+#    ports:
+#      - "8080:80"
+
+
+# *****************************************************************************
+
+#version: '3.8'  # Specify the version of Docker Compose
+
+#services:
+#  pgdatabase:
+#    image: postgres:latest
+#    environment:
+#      - POSTGRES_USER=root
+#      - POSTGRES_PASSWORD=root
+#      - POSTGRES_DB=nyc_tlc_trd
+#    volumes:
+#      - "./nyc_tlc_trip_record_data:/var/lib/postgresql/data:rw"  # Persist data
+#    ports:
+#      - "5432:5432"  # Expose PostgreSQL on port 5432
+#
+#  pgadmin:
+#    image: dpage/pgadmin4
+#    environment:
+#      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+#      - PGADMIN_DEFAULT_PASSWORD=root
+#    ports:
+#      - "8080:80"  # Expose pgAdmin on port 8080
+
+# *****************************************************************************
+
+#services:
+#  pgdatabase:
+#    image: postgres:latest
+#    environment:
+#      - POSTGRES_USER=root
+#      - POSTGRES_PASSWORD=root
+#      - POSTGRES_DB=nyc_tlc_trd
+#    volumes:
+#      - "./nyc_tlc_trip_record_data:/var/lib/postgresql/data:rw"  # Persist data
+#    ports:
+#      - "5432:5432"  # Expose PostgreSQL on port 5432
+#
+#  pgadmin:
+#    image: dpage/pgadmin4
+#    environment:
+#      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+#      - PGADMIN_DEFAULT_PASSWORD=root
+#    volumes:
+#      - ./data_pgadmin:/var/lib/pgadmin  # Persist pgAdmin data
+#    ports:
+#      - "8080:80"  # Expose pgAdmin on port 8080
+#    depends_on:
+#      - pgdatabase  # Ensure pgAdmin starts after pgdatabase
+
+# *****************************************************************************
+
+#services:
+#  pgdatabase:
+#    image: postgres:latest
+#    environment:
+#      - POSTGRES_USER=root
+#      - POSTGRES_PASSWORD=root
+#      - POSTGRES_DB=nyc_tlc_trd
+#    volumes:
+#      - dtc_postgres_volume_local:/var/lib/postgresql/data  # Use Docker volume
+#    ports:
+#      - "5432:5432"  # Expose PostgreSQL on port 5432
+#
+#  pgadmin:
+#    image: dpage/pgadmin4
+#    environment:
+#      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+#      - PGADMIN_DEFAULT_PASSWORD=root
+#    volumes:
+#      - pgadmin_volume_local:/var/lib/pgadmin  # Use Docker volume
+#    ports:
+#      - "8080:80"  # Expose pgAdmin on port 8080
+#    depends_on:
+#      - pgdatabase  # Ensure pgAdmin starts after pgdatabase
+#
+#volumes:
+#  dtc_postgres_volume_local: { }  # Create a volume for PostgreSQL
+#  pgadmin_volume_local: { }  # Create a volume for pgAdmin
+
+# *****************************************************************************
+
+services:
+  pgdatabase:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=nyc_tlc_trd
+    volumes:
+      - dtc_postgres_volume_local:/var/lib/postgresql/data  # Use Docker volume
+    ports:
+      - "5432:5432"  # Expose PostgreSQL on port 5432
+    networks:
+      - pg-network  # Connect to pg-network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=root
+    volumes:
+      - pgadmin_volume_local:/var/lib/pgadmin  # Use Docker volume
+    ports:
+      - "8080:80"  # Expose pgAdmin on port 8080
+    depends_on:
+      - pgdatabase  # Ensure pgAdmin starts after pgdatabase
+    networks:
+      - pg-network  # Connect to pg-network
+
+volumes:
+  dtc_postgres_volume_local: { }  # Create a volume for PostgreSQL
+  pgadmin_volume_local: { }  # Create a volume for pgAdmin
+
+networks:
+  pg-network: # Define the pg-network
+    external: true  # Use the existing pg-network
