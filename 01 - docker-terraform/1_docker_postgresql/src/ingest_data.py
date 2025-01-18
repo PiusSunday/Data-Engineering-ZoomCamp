@@ -15,7 +15,7 @@ def main(params):
     url = params.url
 
     # Create the dataset directory if it doesn't exist
-    dataset_dir = 'dataset'
+    dataset_dir = '/Users/sunnythesage/PythonProjects/Data-Engineering-BootCamp/01 - docker-terraform/1_docker_postgresql/src/dataset'
     os.makedirs(dataset_dir, exist_ok = True)
 
     # Determine the name of the output file based on the URL
