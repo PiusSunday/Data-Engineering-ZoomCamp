@@ -1,0 +1,209 @@
+SELECT
+	*
+FROM
+	nyc_tlc_data t,
+	zones zpu,
+	zones zdo
+WHERE
+	t."PULocationID" = zpu."LocationID" AND
+	t."DOLocationID" = zdo."LocationID"
+LIMIT 100;
+
+
+**************************
+
+SELECT
+	tpep_pickup_datetime,
+	tpep_dropoff_datetime,
+	total_amount,
+	CONCAT(zpu."Borough", '/', zpu."Zone") AS "pickup_loc",
+	CONCAT(zdo."Borough", '/', zdo."Zone") AS "dropoff_loc"
+FROM
+	nyc_tlc_data t,
+	zones zpu,
+	zones zdo
+WHERE
+	t."PULocationID" = zpu."LocationID" AND
+	t."DOLocationID" = zdo."LocationID"
+LIMIT 100;
+
+**************************
+
+SELECT
+	tpep_pickup_datetime,
+	tpep_dropoff_datetime,
+	total_amount,
+	CONCAT(zpu."Borough", '/', zpu."Zone") AS "pickup_loc",
+	CONCAT(zdo."Borough", '/', zdo."Zone") AS "dropoff_loc"
+FROM
+	nyc_tlc_data t JOIN zones zpu
+		ON t. "PULocationID" = zpu. "LocationID"
+	JOIN zones zdo
+		ON t."DOLocationID" = zdo. "LocationID"
+LIMIT 100;
+
+**************************
+
+SELECT
+	tpep_pickup_datetime,
+	tpep_dropoff_datetime,
+	total_amount,
+	"PULocationID",
+	"DOLocationID"
+FROM
+	nyc_tlc_data t
+LIMIT 100;
+
+**************************
+
+SELECT
+	tpep_pickup_datetime,
+	tpep_dropoff_datetime,
+	total_amount,
+	"PULocationID",
+	"DOLocationID"
+FROM
+	nyc_tlc_data
+WHERE
+	"PULocationID" is NULL
+LIMIT 100;
+
+**************************
+
+SELECT
+	tpep_pickup_datetime,
+	tpep_dropoff_datetime,
+	total_amount,
+	"PULocationID",
+	"DOLocationID"
+FROM
+	nyc_tlc_data t
+WHERE
+	"PULocationID" NOT IN (SELECT "LocationID" FROM zones)
+LIMIT 100;
+
+**************************
+
+SELECT
+	tpep_pickup_datetime,
+	tpep_dropoff_datetime,
+	total_amount,
+	CONCAT(zpu."Borough", '/', zpu."Zone") AS "pickup_loc",
+	CONCAT(zdo."Borough", '/', zdo."Zone") AS "dropoff_loc"
+FROM
+	nyc_tlc_data t LEFT JOIN zones zpu
+		ON t. "PULocationID" = zpu."LocationID"
+	LEFT JOIN zones zdo
+		ON t."DOLocationID" = zdo."LocationID"
+LIMIT 100;
+
+**************************
+
+SELECT
+	CAST(tpep_dropoff_datetime AS DATE) as "day",
+	total_amount
+FROM
+	nyc_tlc_data t
+LIMIT 100;
+
+**************************
+
+SELECT
+	CAST(tpep_dropoff_datetime AS DATE) as "day",
+	COUNT(1)
+FROM
+	nyc_tlc_data t
+GROUP BY
+	CAST(tpep_dropoff_datetime AS DATE)
+ORDER BY "day" ASC;
+
+**************************
+
+SELECT
+	CAST(tpep_dropoff_datetime AS DATE) as "day",
+	COUNT(1) as "count"
+FROM
+	nyc_tlc_data t
+GROUP BY
+	CAST(tpep_dropoff_datetime AS DATE)
+ORDER BY "count" DESC;
+
+**************************
+
+SELECT
+	CAST(tpep_dropoff_datetime AS DATE) as "day",
+	COUNT(1) as "count",
+	MAX(total_amount),
+	MAX(passenger_count)
+FROM
+	nyc_tlc_data t
+GROUP BY
+	CAST(tpep_dropoff_datetime AS DATE)
+ORDER BY "count" DESC;
+
+**************************
+
+SELECT
+	CAST(tpep_dropoff_datetime AS DATE) as "day",
+	"DOLocationID"
+	COUNT(1) as "count",
+	MAX(total_amount),
+	MAX(passenger_count)
+FROM
+	nyc_tlc_data t
+GROUP BY
+	1, 2
+ORDER BY "count" DESC;
+
+**************************
+
+SELECT
+	CAST(tpep_dropoff_datetime AS DATE) as "day",
+	"DOLocationID",
+	COUNT(1) as "count",
+	MAX(total_amount),
+	MAX(passenger_count)
+FROM
+	nyc_tlc_data t
+GROUP BY
+	1, 2
+ORDER BY "count" DESC;
+
+**************************
+
+SELECT
+	CAST(tpep_dropoff_datetime AS DATE) as "day",
+	"DOLocationID",
+	COUNT(1) as "count",
+	MAX(total_amount),
+	MAX(passenger_count)
+FROM
+	nyc_tlc_data t
+GROUP BY
+	1, 2
+ORDER BY
+	"day" ASC,
+	"DOLocationID" ASC;
+
+**************************
+
+SELECT
+	CAST(tpep_dropoff_datetime AS DATE) as "day",
+	"DOLocationID",
+	COUNT(1) as "count",
+	MAX(total_amount),
+	MAX(passenger_count)
+FROM
+	nyc_tlc_data t
+GROUP BY
+	1, 2
+ORDER BY
+	"day" ASC,
+	"DOLocationID" ASC;
+
+**************************
+
+
+
+
+**************************
