@@ -1,0 +1,38 @@
+services:
+  db:
+    image: postgres:latest
+    container_name: pg-database-new  # Unique container name
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=gttr_2019_db
+    volumes:
+      - postgres_volume_local_new:/var/lib/postgresql/data  # Unique volume name
+    ports:
+      - "5434:5432"  # Use a different host port (5434 instead of 5432)
+    networks:
+      - pg-network-new  # Use a different network
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pg-admin-new  # Unique container name
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=pgadmin
+    volumes:
+      - pgadmin_local_volume_new:/var/lib/pgadmin  # Unique volume name
+    ports:
+      - "8081:80"  # Use a different host port (8081 instead of 8080)
+    depends_on:
+      - db
+    networks:
+      - pg-network-new  # Use a different network
+
+volumes:
+  postgres_volume_local_new:  # Unique volume name
+  pgadmin_local_volume_new:  # Unique volume name
+
+networks:
+  pg-network-new: # Unique network name
+    name: pg-network-new
+    external: false  # Let Docker Compose create the network
