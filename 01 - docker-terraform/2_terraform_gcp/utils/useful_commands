@@ -1,0 +1,3 @@
+export GOOGLE_APPLICATION_CREDENTIALS="/Users/sunnythesage/PythonProjects/Data-Engineering-BootCamp/01 - docker-terraform/2_terraform_gcp/terraform/keys/service-account-creds-key.json"
+
+echo $GOOGLE_APPLICATION_CREDENTIALS
